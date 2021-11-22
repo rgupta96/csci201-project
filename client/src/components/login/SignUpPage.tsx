@@ -7,28 +7,32 @@ import {
     IonToolbar, IonTitle, IonContent, IonPage,
     IonList, IonItem, IonLabel, IonInput, IonLoading
 } from '@ionic/react';
+
 import { useHistory } from 'react-router-dom';
 import { LoginProps } from './LoginRouter';
 import {
     AccountType
 } from '../../App'
 
+
 // https://stackblitz.com/edit/ionic-react-demo?file=pages%2FLogin.jsx
-const LoginPage : FC<LoginProps> = ({
+const SignUpPage : FC<LoginProps> = ({
     setIsAuthenticated,
     setAuthCredentials
 } : LoginProps) => {
 
     const [password, setPassword] = useState<string>('');
+    const [passwordConfirm, setPasswordConfirm] = useState<string>('');
+
     const [email, setEmail] = useState<string>('');
 
     let history = useHistory();
 
 
-    const submitLoginIn = () => {
+    const submitSignUp = () => {
 
         // If empty
-        if (email === '' || password === '') {
+        if (email === '' || password === '' || passwordConfirm === '') {
             throw "Please fill out all fields"
         }
 
@@ -37,7 +41,10 @@ const LoginPage : FC<LoginProps> = ({
             throw "Valid emails must contain an '@'"
         }
 
-        // Retrieve data, then set credentials
+        // Throw some error
+        if (password !== passwordConfirm) {
+            throw "Passwords don't match"
+        }
 
         setAuthCredentials({
             // Change this
@@ -60,7 +67,7 @@ const LoginPage : FC<LoginProps> = ({
                     <IonButtons slot="start">
                     <IonBackButton defaultHref={`/`} />
                     </IonButtons>
-                    <IonTitle>Login</IonTitle>
+                    <IonTitle>Sign Up</IonTitle>
                 </IonToolbar>
             </IonHeader>
 
@@ -81,7 +88,15 @@ const LoginPage : FC<LoginProps> = ({
                             onInput={(e : any) => setPassword(e.currentTarget.value)}
                         />
                     </IonItem>
-                <IonButton expand="block" type="submit" onClick={submitLoginIn}>Log in</IonButton>
+                    <IonItem>
+                        <IonLabel position={'fixed'}>Retype Pass</IonLabel>
+                        <IonInput
+                            type="password"
+                            value={passwordConfirm}
+                            onInput={(e : any) => setPasswordConfirm(e.currentTarget.value)}
+                        />
+                    </IonItem>
+                <IonButton expand="block" type="submit" onClick={submitSignUp}>Sign Up</IonButton>
                 </IonList>
             {/* </form> */}
             {/* <div className="below-form">
@@ -93,4 +108,4 @@ const LoginPage : FC<LoginProps> = ({
     )
 }
 
-export default LoginPage;
+export default SignUpPage;

@@ -40,12 +40,30 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
+export enum AccountType {
+    GUEST,
+    BUYER,
+    SELLER
+}
+
+interface Credentials {
+    username: string,
+    password: string
+}
+
+export interface AuthCredentials {
+    type: AccountType,
+    credentials?: Credentials
+}
+
 const App: React.FC = () => {
 
     // Rather than use something like redux which would make me very sad
     // We're going to chain a bunch of state hooks through various components :D
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-
+    const [authCredentials, setAuthCredentials] = useState<AuthCredentials>({
+        type: AccountType.GUEST
+    })
 
     return (
         <IonApp>
@@ -53,7 +71,10 @@ const App: React.FC = () => {
                 isAuthenticated ?
                 <AuthenticatedSetup/>
                 :
-                <LoginRouter />
+                <LoginRouter 
+                    setIsAuthenticated={setIsAuthenticated}
+                    setAuthCredentials={setAuthCredentials}
+                />
             }
         </IonApp>
     )
@@ -66,32 +87,32 @@ const AuthenticatedSetup = () => {
             <IonReactRouter>
                 <IonTabs>
                     <IonRouterOutlet>
-                        <Route exact path="/tab1">
+                        <Route exact path="/profile">
                             <Tab1 />
                         </Route>
-                        <Route exact path="/tab2">
+                        <Route exact path="/listings">
                             <Tab2 />
                         </Route>
-                        <Route path="/tab3">
+                        <Route path="/messages">
                             <Tab3 />
                         </Route>
                         <Route exact path="/">
-                            <Redirect to="/tab1" />
+                            <Redirect to="/listings" />
                         </Route>
                     </IonRouterOutlet>
                     <IonTabBar slot="bottom">
-                    <IonTabButton tab="tab1" href="/tab1">
-                        <IonIcon icon={triangle} />
-                        <IonLabel>Tab 1</IonLabel>
-                    </IonTabButton>
-                    <IonTabButton tab="tab2" href="/tab2">
-                        <IonIcon icon={ellipse} />
-                        <IonLabel>Tab 2</IonLabel>
-                    </IonTabButton>
-                    <IonTabButton tab="tab3" href="/tab3">
-                        <IonIcon icon={square} />
-                        <IonLabel>Tab 3</IonLabel>
-                    </IonTabButton>
+                        <IonTabButton tab="profile" href="/profile">
+                            <IonIcon icon={triangle} />
+                            <IonLabel>Profile</IonLabel>
+                        </IonTabButton>
+                        <IonTabButton tab="listings" href="/listings">
+                            <IonIcon icon={ellipse} />
+                            <IonLabel>Listings</IonLabel>
+                        </IonTabButton>
+                        <IonTabButton tab="messages" href="/messages">
+                            <IonIcon icon={square} />
+                            <IonLabel>Messages</IonLabel>
+                        </IonTabButton>
                     </IonTabBar>
                 </IonTabs>
             </IonReactRouter>

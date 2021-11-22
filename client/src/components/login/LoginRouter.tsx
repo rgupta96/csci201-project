@@ -13,18 +13,42 @@ import { IonReactRouter } from '@ionic/react-router';
 import { Redirect, Route } from 'react-router-dom';
 import SelectAuthType from './SelectAuthType';
 import LoginPage from './login';
+import {
+    AuthCredentials
+} from '../../App';
+import SignUpPage from './SignUpPage';
 
+export interface LoginProps {
+    setIsAuthenticated: (b : boolean) => void,
+    setAuthCredentials: (c : AuthCredentials) => void
+}
 
-const LoginRouter : FC = () => {
+const LoginRouter : FC<LoginProps> = ({
+    setIsAuthenticated,
+    setAuthCredentials
+} : LoginProps) => {
 
     return (
         <IonReactRouter>
             <IonRouterOutlet>
-                <Route exact path="/welcome" component={SelectAuthType}/>
-                <Route exact path="/signup">
-                    {/* <Tab2 /> */}
+                <Route exact path="/welcome">
+                    <SelectAuthType 
+                        setIsAuthenticated={setIsAuthenticated}
+                        setAuthCredentials={setAuthCredentials}
+                    />
                 </Route>
-                <Route path="/login" component={LoginPage} />
+                <Route exact path="/signup">
+                    <SignUpPage 
+                        setIsAuthenticated={setIsAuthenticated}
+                        setAuthCredentials={setAuthCredentials}
+                    />
+                </Route>
+                <Route path="/login">
+                    <LoginPage 
+                        setIsAuthenticated={setIsAuthenticated}
+                        setAuthCredentials={setAuthCredentials}
+                    />
+                </Route>
                 <Route path="/guest">
                     {/* <Tab3 /> */}
                 </Route>

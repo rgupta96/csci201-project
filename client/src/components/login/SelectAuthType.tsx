@@ -7,10 +7,20 @@ import {
     IonToolbar, IonTitle, IonContent, IonPage,
     IonList, IonItem, IonLabel, IonInput, IonLoading
 } from '@ionic/react';
+import { useHistory } from 'react-router-dom';
+import { LoginProps } from './LoginRouter';
+import {
+    AccountType
+} from '../../App'
 
 
 // https://stackblitz.com/edit/ionic-react-demo?file=pages%2FLogin.jsx
-const SelectAuthType : FC<any> = ({ track, history }) => {
+const SelectAuthType : FC<LoginProps> = ({
+    setIsAuthenticated,
+    setAuthCredentials
+} : LoginProps) => {
+
+    let history = useHistory();
 
     const [password, setPassword] = useState<string>('');
     const [email, setEmail] = useState<string>();
@@ -25,11 +35,15 @@ const SelectAuthType : FC<any> = ({ track, history }) => {
     }
 
     const onSignUp = () => {
-
+        goTo('signup');
     }
 
     const onGuest = () => {
-
+        setAuthCredentials({
+            type: AccountType.GUEST,
+        })
+        setIsAuthenticated(true)
+        goTo('/')
     }
 
     return (
