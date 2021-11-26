@@ -3,18 +3,14 @@ import React, {
     useState
 } from 'react';
 
+import Listing from './Listing';
+
+
 import { 
-    IonButton,
-    IonContent, 
-    IonHeader,
     IonInfiniteScroll, 
     IonInfiniteScrollContent, 
     IonItem,
-    IonLabel,
     IonList,  
-    IonPage, 
-    IonTitle, 
-    IonToolbar,
     useIonViewWillEnter
   } from '@ionic/react';
 
@@ -60,7 +56,12 @@ const Listings : FC = () => {
             return (
               <IonItem key={index}>
                 {/* <IonLabel>{item}</IonLabel> */}
-                {item}
+                <Listing 
+                    id={index}
+                    address={item}
+                    price={1200}
+                    duration={'11/17/21 - 11/17/22'}
+                />
               </IonItem>
             )
           })}

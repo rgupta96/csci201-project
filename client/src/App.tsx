@@ -1,4 +1,4 @@
-import { Redirect, Route } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import {
   IonApp,
   IonIcon,
@@ -39,6 +39,7 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import IndividualListing from './components/listings/main/IndividualListings';
 
 export enum AccountType {
     GUEST,
@@ -87,19 +88,31 @@ const AuthenticatedSetup = () => {
             <IonReactRouter>
                 <IonTabs>
                     <IonRouterOutlet>
+                        <Switch>
+
                         <Route exact path="/profile">
                             <Tab1 />
                         </Route>
+
+                        <Route path="/listings/:id" component={IndividualListing} /> 
+                        
                         <Route exact path="/listings">
                             <Tab2 />
                         </Route>
+
+
+
                         <Route path="/messages">
                             <Tab3 />
                         </Route>
                         <Route exact path="/">
                             <Redirect to="/listings" />
                         </Route>
+
+                        </Switch>
+
                     </IonRouterOutlet>
+
                     <IonTabBar slot="bottom">
                         <IonTabButton tab="profile" href="/profile">
                             <IonIcon icon={triangle} />
@@ -113,6 +126,7 @@ const AuthenticatedSetup = () => {
                             <IonIcon icon={square} />
                             <IonLabel>Messages</IonLabel>
                         </IonTabButton>
+
                     </IonTabBar>
                 </IonTabs>
             </IonReactRouter>
