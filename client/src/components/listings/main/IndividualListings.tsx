@@ -32,6 +32,14 @@ const IndividualListing = () => {
         id
     } = location.state;
 
+    let description = "This home has a roof and a door and a few windows. There is space inside this home. This home is definitely a shelter for people who need a place to stay."
+    let amenities : string[] = [
+        'Pool',
+        'Game Room',
+        'Gym',
+        'Sacrifice Area'
+    ]
+
     return (
         <IonPage>
             <IonHeader>
@@ -47,48 +55,47 @@ const IndividualListing = () => {
             <IonContent>
                 <IonCard>
                 <IonCardHeader>
-                    <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
-                    <IonCardTitle>Card Title</IonCardTitle>
+                    <IonCardSubtitle>{duration}</IonCardSubtitle>
+                    <IonCardTitle>{address}</IonCardTitle>
                 </IonCardHeader>
 
                 <IonCardContent>
-                    Keep close to Nature's heart... and break clear away, once in awhile,
-                    and climb a mountain or spend a week in the woods. Wash your spirit clean.
-            </IonCardContent>
+                    {description}
+                </IonCardContent>
                 </IonCard>
 
-                <IonCard>
-                <IonItem>
-                    <IonIcon icon={pin} slot="start" />
-                    <IonLabel>ion-item in a card, icon left, button right</IonLabel>
-                    <IonButton fill="outline" slot="end">View</IonButton>
-                </IonItem>
+                {/* <IonCard>
+                    <IonItem>
+                        <IonIcon icon={pin} slot="start" />
+                        <IonLabel>ion-item in a card, icon left, button right</IonLabel>
+                        <IonButton fill="outline" slot="end">View</IonButton>
+                    </IonItem>
 
-                <IonCardContent>
-                    This is content, without any paragraph or header tags,
-                    within an ion-cardContent element.
-            </IonCardContent>
-                </IonCard>
+                    <IonCardContent>
+                        This is content, without any paragraph or header tags,
+                        within an ion-cardContent element.
+                    </IonCardContent>
+                </IonCard> */}
 
                 <IonCard>
                 <IonItem href="#" className="ion-activated">
                     <IonIcon icon={wifi} slot="start" />
-                    <IonLabel>Card Link Item 1 activated</IonLabel>
+                    <IonLabel>{price}</IonLabel>
                 </IonItem>
 
                 <IonItem href="#">
                     <IonIcon icon={wine} slot="start" />
-                    <IonLabel>Card Link Item 2</IonLabel>
+                    <IonLabel>{`ID ${id}`}</IonLabel>
                 </IonItem>
 
                 <IonItem className="ion-activated">
                     <IonIcon icon={warning} slot="start" />
-                    <IonLabel>Card Button Item 1 activated</IonLabel>
+                    <IonLabel>{`Amenities: ${amenities.join(', ')}`}</IonLabel>
                 </IonItem>
 
                 <IonItem>
                     <IonIcon icon={walk} slot="start" />
-                    <IonLabel>Card Button Item 2</IonLabel>
+                    <IonLabel>Other stuff goes here</IonLabel>
                 </IonItem>
                 </IonCard>
             </IonContent>
