@@ -1,0 +1,13 @@
+<ion-item *ngIf="listing" [routerLink]="'/message/' + listing.id" [detail]="false">
+  <div slot="start"></div>
+  <ion-label class="ion-text-wrap">
+    <h2>
+      {{ listing.propertyId }}
+      <span class="date">
+        <ion-note>{{ listing.dateListed }}</ion-note>
+        <ion-icon name="chevron-forward" size="small" *ngIf="isIos()"></ion-icon>
+      </span>
+    </h2>
+    <h3>{{ listing.numberConsidering }}</h3>
+  </ion-label>
+  </ion-item>

@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Inbox
+      Listings
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -14,15 +14,13 @@
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">
-        Inbox
+        Listings
       </ion-title>
     </ion-toolbar>
   </ion-header>
 
   <ion-list>
-    <app-message *ngFor="let property of properties" [property]="property"></app-message>
+    <listing-message *ngFor="let listing of listings" [listing]="listing"></listing-message>
   </ion-list>
-
-  <ion-button (click)="addProperty()">Add</ion-button>
-  <ion-button [routerLink]="['/listings']">Go to Listings</ion-button>
+  
 </ion-content>
