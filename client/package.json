@@ -64,9 +64,8 @@
       "last 1 safari version"
     ]
   },
+  "description": "An Ionic project",
   "devDependencies": {
-    "@capacitor/cli": "3.3.2",
-    "react-scripts": "^3.4.4"
-  },
-  "description": "An Ionic project"
+    "react-scripts": "4.0.3"
+  }
 }

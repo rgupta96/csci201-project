@@ -44,14 +44,9 @@ const Listings : FC = () => {
             // setInfiniteDisabled(true);
           }
         }, 500);
-    }  
-
-    const loadAPI = (http: HttpClient) => {
-        console.log(http.get("http://localhost:8080/api/properties"));
     }
 
     useIonViewWillEnter(() => {
-        loadAPI;
         pushData();
     });
 
