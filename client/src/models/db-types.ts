@@ -9,3 +9,22 @@ export interface Property {
   price: number;
   duration: number;
 }
+
+export interface User {
+  id?: number;
+  firstName: string;
+  lastName: string;
+  userType: number;
+  loginType: number;
+  dateCreated: number;
+}
+
+export interface Listing {
+  id?: number;
+  userID: number;
+  propertyID: number;
+  dateListed: number;
+  numberConsidering: number;
+  dateCreated: number;
+  active: number;
+}

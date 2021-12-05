@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
 import { PropertyService } from '../services/property.service';
 import { Property } from '../../models/property.model';
+import { UserService } from '../services/user.service';
+import { User } from '../../models/user.model';
+import { ListingService } from '../services/listing.service';
+import { Listing } from '../../models/listing.model';
+
 import * as DB from '../../models/db-types';
 @Component({
   selector: 'app-home',
@@ -9,11 +14,23 @@ import * as DB from '../../models/db-types';
 })
 export class HomePage {
   properties: DB.Property[];
-  constructor(private data: PropertyService) {
+  users: DB.User[];
+  listings: DB.Listing[];
+  constructor(private propertyData: PropertyService, private userData: UserService, private listingData: ListingService) {
 
-    this.data.getProperties().subscribe((response) => {
+    this.propertyData.getProperties().subscribe((response) => {
       console.log(response);
       this.properties = response;
+    });
+
+    this.userData.getUsers().subscribe((response) => {
+      console.log(response);
+      this.users = response;
+    });
+
+    this.listingData.getListings().subscribe((response) => {
+      console.log(response);
+      this.listings = response;
     });
   }
 
@@ -36,7 +53,7 @@ export class HomePage {
       data.duration
     );
     console.log(JSON.stringify(toInsert));
-    this.data.createProperty(toInsert).subscribe(r => {
+    this.propertyData.createProperty(toInsert).subscribe(r => {
       console.log(r);
     });
   }
