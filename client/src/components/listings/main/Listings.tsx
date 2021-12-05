@@ -14,8 +14,11 @@ import {
     useIonViewWillEnter
   } from '@ionic/react';
 
-const Listings : FC = () => {
+import { HttpClient } from '@angular/common/http';
+import { Console } from 'console';
 
+const Listings : FC = () => {
+    
     const [data, setData] = useState<string[]>([]);
 
     const pushData = () => {
@@ -43,7 +46,12 @@ const Listings : FC = () => {
         }, 500);
     }  
 
+    const loadAPI = (http: HttpClient) => {
+        console.log(http.get("http://localhost:8080/api/properties"));
+    }
+
     useIonViewWillEnter(() => {
+        loadAPI;
         pushData();
     });
 
