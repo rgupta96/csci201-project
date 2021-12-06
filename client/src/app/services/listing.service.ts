@@ -5,6 +5,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
 import * as DB from '../../models/db-types';
+import { Listing } from '../../models/listing.model';
 import { URL } from './api';
 @Injectable({
   providedIn: 'root'
@@ -18,10 +19,10 @@ export class ListingService {
 
   constructor(private httpClient: HttpClient) { }
 
-  createListing(listing: DB.Listing): Observable<any> {
-    return this.httpClient.post<DB.Listing>(this.endpoint, JSON.stringify(listing), this.httpOptions)
+  createListing(listing: Listing): Observable<any> {
+    return this.httpClient.post<Listing>(this.endpoint, JSON.stringify(listing), this.httpOptions)
       .pipe(
-        catchError(this.handleError<DB.Listing>('Error occured'))
+        catchError(this.handleError<Listing>('Error occured'))
       );
   }
   getListing(id): Observable<DB.Listing> {
@@ -51,11 +52,11 @@ export class ListingService {
   }
 
 
-  updateListing(id, listing: DB.Listing): Observable<any> {
+  updateListing(id, listing: Listing): Observable<any> {
     return this.httpClient.put(this.endpoint + '/' + id, JSON.stringify(listing), this.httpOptions)
       .pipe(
         tap(_ => console.log(`Listing updated: ${id}`)),
-        catchError(this.handleError<DB.Listing[]>('Update listing'))
+        catchError(this.handleError<Listing[]>('Update listing'))
       );
   }
 

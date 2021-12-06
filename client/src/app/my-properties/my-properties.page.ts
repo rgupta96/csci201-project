@@ -46,7 +46,9 @@ export class MyPropertiesPage {
 
     this.router.navigate(['/my-properties/my-specific-listing/', property]);
   }
-
+  openCreateListing() {
+    this.router.navigate(['/my-properties/create-new-listing']);
+  }
   ionViewDidEnter() {
     this.myListings = [];
     this.myProperties = [];

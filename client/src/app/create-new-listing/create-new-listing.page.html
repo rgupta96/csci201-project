@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Create New Listing</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="propData" (ngSubmit)="addListing()">
+    <ion-item lines="full">
+      <ion-label>Headline</ion-label>
+      <ion-input formControlName="headline" type="text" required></ion-input>
+    </ion-item>
+    <ion-item lines="full">
+      <ion-label>Description</ion-label>
+      <ion-textarea formControlName="description" required></ion-textarea>
+    </ion-item>
+    <ion-item lines="full">
+      <ion-label>Address</ion-label>
+      <ion-input formControlName="address" type="text" required></ion-input>
+    </ion-item>
+    <ion-item lines="full">
+      <ion-label>Amenities</ion-label>
+      <ion-input formControlName="amenities" type="text" required></ion-input>
+    </ion-item>
+    <ion-item lines="full">
+      <ion-label>Price</ion-label>
+      <ion-input formControlName="price" type="number" required></ion-input>
+    </ion-item>
+    <ion-item lines="full">
+      <ion-label>Duration</ion-label>
+      <ion-input formControlName="duration" type="number" required></ion-input>
+    </ion-item>
+    <ion-row>
+      <ion-col>
+        <ion-button type="submit" color="primary" expand="block">Submit</ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
+</ion-content>

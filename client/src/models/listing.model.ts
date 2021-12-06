@@ -4,14 +4,12 @@ export class Listing {
     propertyId: number;
     dateListed: number;
     numberConsidering: number;
-    dateCreated: number;
 
     constructor(
         userID: number,
         propertyID: number,
         dateListed: number,
         numberConsidering: number,
-        dateCreated: number,
         id?: number
     ) {
       this.id = id;
@@ -19,7 +17,6 @@ export class Listing {
       this.propertyId = propertyID;
       this.dateListed = dateListed;
       this.numberConsidering = numberConsidering;
-      this.dateCreated = dateCreated;
     }
 
     getId(): number {
@@ -58,16 +55,8 @@ export class Listing {
       this.numberConsidering = x;
     }
 
-    getDateCreated(): number {
-        return this.dateCreated;
-    }
-
-    setDateCreated(x: number) {
-        this.dateCreated = x;
-    }
-
     toString() {
-      return "Listing [id=" + this.id + ", userID=" + this.userId + ", propertyID=" + this.propertyId + ", dateListed=" + this.dateListed + ", numberConsidering=" + this.numberConsidering + ", dateCreated=" + this.dateCreated + "]";
+      return "Listing [id=" + this.id + ", userID=" + this.userId + ", propertyID=" + this.propertyId + ", dateListed=" + this.dateListed + ", numberConsidering=" + this.numberConsidering + "]";
     }
   }
 

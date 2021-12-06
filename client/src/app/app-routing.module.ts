@@ -27,6 +27,10 @@ const routes: Routes = [
     path: 'my-properties/my-specific-listing',
     loadChildren: () => import('./my-specific-listing/my-specific-listing.module').then( m => m.MySpecificListingPageModule)
   },
+  {
+    path: 'my-properties/create-new-listing',
+    loadChildren: () => import('./create-new-listing/create-new-listing.module').then( m => m.CreateNewListingPageModule)
+  },
 ];
 
 @NgModule({
