@@ -15,6 +15,18 @@ const routes: Routes = [
     loadChildren: () => import('./view-message/view-message.module').then( m => m.ViewMessagePageModule)
   },
   {
+    path: 'login',
+    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
+  },
+  {
+    path: 'select-auth-type',
+    loadChildren: () => import('./select-auth-type/select-auth-type.module').then( m => m.SelectAuthTypePageModule)
+  },
+  {
+    path: 'sign-up',
+    loadChildren: () => import('./sign-up/sign-up.module').then( m => m.SignUpPageModule)
+  },
+  {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full'
