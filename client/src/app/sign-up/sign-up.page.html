@@ -1,9 +1,45 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>SignUp</ion-title>
+    <ion-title>Sign Up</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <form [formGroup]="userData" (ngSubmit)="createUser()">
+
+    <ion-item lines="full">
+      <ion-label>First Name</ion-label>
+      <ion-input formControlName="firstName" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label>Last Name</ion-label>
+      <ion-input formControlName="lastName" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label>What Are You?</ion-label>
+      <ion-select formControlName="userType" okText="Okay" cancelText="Dismiss">
+        <ion-select-option value="1">Lister</ion-select-option>
+        <ion-select-option value="2">Renter</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label>Email</ion-label>
+      <ion-input formControlName="email" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label>Password</ion-label>
+      <ion-input formControlName="password" type="password"></ion-input>
+    </ion-item>
+
+    <ion-row>
+      <ion-col>
+        <ion-button type="submit" color="primary" expand="block">Sign Up</ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
 
 </ion-content>

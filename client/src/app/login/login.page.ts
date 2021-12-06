@@ -13,16 +13,26 @@ import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 })
 export class LoginPage {
   authData: FormGroup;
-
+  user?: User;
   constructor(
     private userService: UserService,
     private alertCtrl: AlertController,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
-    this.authData = new FormGroup({
-      email: new FormControl('', Validators.required),
-      password: new FormControl('', Validators.required)
+    this.route.queryParams.subscribe(p => {
+      if (this.router.getCurrentNavigation().extras.state) {
+        console.log(this.router.getCurrentNavigation().extras.state);
+        this.user = this.router.getCurrentNavigation().extras.state.user;
+        console.log(this.user);
+      }
+
+      this.authData = new FormGroup({
+        email: new FormControl((this.user == null) ? '' : this.user.email, Validators.required),
+        password: new FormControl('', Validators.required)
+      });
     });
+
   }
 
   alertAuth() {
@@ -32,6 +42,14 @@ export class LoginPage {
     }).then(res => {
       res.present();
     });
+  }
+
+  continueAsGuest() {
+    this.router.navigate(['/listings']);
+  }
+
+  goToSignUp() {
+    this.router.navigate(['/sign-up']);
   }
 
   authenticateUser() {
@@ -50,8 +68,8 @@ export class LoginPage {
         this.alertAuth();
       } else {
         if(u.userType == 1) { // is Lister (listing properties) ==> MyProperties
-          // let navigationExtras: NavigationExtras = { state: { user: u } };
-          this.router.navigate(['/my-properties', u]);
+          let navigationExtras: NavigationExtras = { state: { user: u } };
+          this.router.navigate(['/my-properties'], navigationExtras);
         } else if (u.userType == 2) { // is Renter (looking for properties) ==> Listings
           let navigationExtras: NavigationExtras = { state: { user: u } };
           this.router.navigate(['/listings'], navigationExtras);

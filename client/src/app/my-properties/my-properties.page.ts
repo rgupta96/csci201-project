@@ -31,18 +31,12 @@ export class MyPropertiesPage {
     private listingService: ListingService,
     private propertyService: PropertyService
   ) {
-    this.route.params.subscribe(p => {
-      console.log(p);
-      this.user = new User(
-        p.firstName,
-        p.lastName,
-        p.userType,
-        p.loginType,
-        p.dateCreated,
-        p.email,
-        p.id
-      );
-      console.log(this.user);
+    this.route.queryParams.subscribe(p => {
+      if (this.router.getCurrentNavigation().extras.state) {
+        console.log(this.router.getCurrentNavigation().extras.state);
+        this.user = this.router.getCurrentNavigation().extras.state.user;
+        console.log(this.user);
+      }
     });
   }
 
@@ -56,7 +50,8 @@ export class MyPropertiesPage {
     this.router.navigate(['/my-properties/my-specific-listing/', property.id], navigationExtras);
   }
   openCreateListing() {
-    this.router.navigate(['/my-properties/create-new-listing', this.user.id]);
+    let navigationExtras: NavigationExtras = { state: { user: this.user } };
+    this.router.navigate(['/my-properties/create-new-listing', this.user.id], navigationExtras);
   }
   ionViewDidEnter() {
     this.myListings = [];

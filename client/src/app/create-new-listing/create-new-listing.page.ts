@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { Property } from 'src/models/property.model';
 import { PropertyService } from '../services/property.service';
 import { FormGroup, FormBuilder, Validators, FormControl } from "@angular/forms";
@@ -28,17 +28,24 @@ export class CreateNewListingPage {
     private route: ActivatedRoute,
     private propertyService: PropertyService
   ) {
-    this.route.params.subscribe(p => {
-      this.user = new User(
-        p.firstName,
-        p.lastName,
-        p.userType,
-        p.loginType,
-        p.dateCreated,
-        p.email,
-        p.id
-      );
+    this.route.queryParams.subscribe(p => {
+      if (this.router.getCurrentNavigation().extras.state) {
+        console.log(this.router.getCurrentNavigation().extras.state);
+        this.user = this.router.getCurrentNavigation().extras.state.user;
+        console.log(this.user);
+      }
     });
+    // this.route.params.subscribe(p => {
+    //   this.user = new User(
+    //     p.firstName,
+    //     p.lastName,
+    //     p.userType,
+    //     p.loginType,
+    //     p.dateCreated,
+    //     p.email,
+    //     p.id
+    //   );
+    // });
     this.propData = new FormGroup({
       headline: new FormControl('', Validators.required),
       description: new FormControl('', Validators.required),
@@ -88,7 +95,8 @@ export class CreateNewListingPage {
           const listing = new Listing(this.user.id, r.id, Date.now(), 0);
           this.listingService.createListing(listing).subscribe(re => {
             console.log(re);
-            this.router.navigate(['/my-properties', this.user]);
+            let navigationExtras: NavigationExtras = { state: { user: this.user } };
+            this.router.navigate(['/my-properties'], navigationExtras);
           });
         })
       }

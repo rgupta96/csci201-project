@@ -6,7 +6,8 @@ export class User {
     userType: number;
     loginType: number;
     dateCreated: number;
-    email;
+    email: string;
+    password: string;
 
     constructor(
         firstName: string,
@@ -15,6 +16,7 @@ export class User {
         loginType: number,
         dateCreated: number,
         email: string,
+        password: string,
         id?: number
     ) {
       this.id = id;
@@ -23,6 +25,8 @@ export class User {
       this.userType = userType;
       this.loginType = loginType;
       this.dateCreated = dateCreated;
+      this.password = password;
+      this.email = email;
     }
 
     getId(): number {

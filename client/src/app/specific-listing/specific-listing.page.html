@@ -30,5 +30,5 @@
     {{ property.duration }}
   </ion-item>
   <ion-button *ngIf="user" color="primary" expand="block" (click)="contactLister()">Interested? Contact Lister</ion-button>
-  <h2 *ngIf="!user">Login to contact the lister</h2>
+  <ion-button *ngIf="!user" color="primary" expand="block" [routerLink]="['/login']">Login to Contact Lister</ion-button>
 </ion-content>

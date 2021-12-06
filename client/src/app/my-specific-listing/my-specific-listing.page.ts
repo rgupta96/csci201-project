@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { Property } from 'src/models/property.model';
 import { PropertyService } from '../services/property.service';
 import { FormGroup, FormBuilder, Validators, FormControl } from "@angular/forms";
@@ -63,7 +63,8 @@ export class MySpecificListingPage {
     );
     console.log(submission);
     this.propertyService.updateProperty(this.property.id, updatedProperty).subscribe(r => {
-      this.router.navigate(['/my-properties', this.user]);
+      let navigationExtras: NavigationExtras = { state: { user: this.user } };
+      this.router.navigate(['/my-properties'], navigationExtras);
     });
   }
 
@@ -71,7 +72,8 @@ export class MySpecificListingPage {
     this.listingService.getListingsByPropertyId(this.property.id).subscribe(r => {
       console.log(r[0]);
       this.listingService.deleteListing(r[0].id).subscribe(r => {
-        this.router.navigate(['/my-properties', this.user]);
+        let navigationExtras: NavigationExtras = { state: { user: this.user } };
+        this.router.navigate(['/my-properties'], navigationExtras);
       });
     });
   }
