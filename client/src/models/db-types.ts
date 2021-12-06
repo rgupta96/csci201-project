@@ -18,7 +18,8 @@ export interface User {
   userType: number;
   loginType: number;
   dateCreated: number;
-  email: string
+  email: string;
+  password: string;
 }
 
 export interface Listing {

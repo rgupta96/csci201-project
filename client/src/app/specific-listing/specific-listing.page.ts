@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Property } from 'src/models/property.model';
+import { User } from 'src/models/user.model';
 // import { EmailComposer } from '@ionic-native/email-composer/ngx';
 import { ListingService } from '../services/listing.service';
 import { UserService } from '../services/user.service';
@@ -13,15 +14,19 @@ import { UserService } from '../services/user.service';
 export class SpecificListingPage {
   property: any;
   listerEmail: string;
+  user: User;
   constructor(
-    // private emailComposer: EmailComposer,
+    private router: Router,
     private route: ActivatedRoute,
     private listingService: ListingService,
     private userService: UserService
   ) {
-    this.route.params.subscribe(p => {
-      console.log(p);
-      this.property = p;
+    this.route.queryParams.subscribe(p => {
+      if (this.router.getCurrentNavigation().extras.state) {
+        console.log(this.router.getCurrentNavigation().extras.state);
+        this.user= this.router.getCurrentNavigation().extras.state.user;
+        this.property = this.router.getCurrentNavigation().extras.state.property;
+      }
     });
   }
 

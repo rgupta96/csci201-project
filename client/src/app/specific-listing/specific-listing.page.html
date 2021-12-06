@@ -29,5 +29,6 @@
     <ion-label>Duration</ion-label>
     {{ property.duration }}
   </ion-item>
-  <ion-button color="primary" expand="block" (click)="contactLister()">Interested? Contact Lister</ion-button>
+  <ion-button *ngIf="user" color="primary" expand="block" (click)="contactLister()">Interested? Contact Lister</ion-button>
+  <h2 *ngIf="!user">Login to contact the lister</h2>
 </ion-content>

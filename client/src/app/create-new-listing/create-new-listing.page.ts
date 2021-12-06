@@ -6,6 +6,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from "@angular/forms"
 import { ListingService } from '../services/listing.service';
 import { AlertController } from '@ionic/angular';
 import { Listing } from 'src/models/listing.model';
+import { User } from 'src/models/user.model';
 
 @Component({
   selector: 'app-create-new-listing',
@@ -17,6 +18,7 @@ export class CreateNewListingPage {
   property: Property;
 
   propData: FormGroup;
+  user: User;
 
   constructor(
     private alertCtrl: AlertController,
@@ -26,6 +28,17 @@ export class CreateNewListingPage {
     private route: ActivatedRoute,
     private propertyService: PropertyService
   ) {
+    this.route.params.subscribe(p => {
+      this.user = new User(
+        p.firstName,
+        p.lastName,
+        p.userType,
+        p.loginType,
+        p.dateCreated,
+        p.email,
+        p.id
+      );
+    });
     this.propData = new FormGroup({
       headline: new FormControl('', Validators.required),
       description: new FormControl('', Validators.required),
@@ -72,10 +85,10 @@ export class CreateNewListingPage {
         console.log(submission);
         this.propertyService.createProperty(property).subscribe(r => {
           console.log(r.id);
-          const listing = new Listing(1, r.id, Date.now(), 0);
+          const listing = new Listing(this.user.id, r.id, Date.now(), 0);
           this.listingService.createListing(listing).subscribe(re => {
             console.log(re);
-            this.router.navigate(['/my-properties']);
+            this.router.navigate(['/my-properties', this.user]);
           });
         })
       }

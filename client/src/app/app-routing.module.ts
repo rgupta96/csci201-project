@@ -28,7 +28,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {
@@ -36,15 +36,15 @@ const routes: Routes = [
     loadChildren: () => import('./my-properties/my-properties.module').then( m => m.MyPropertiesPageModule)
   },
   {
-    path: 'my-properties/my-specific-listing',
+    path: 'my-properties/my-specific-listing/:id',
     loadChildren: () => import('./my-specific-listing/my-specific-listing.module').then( m => m.MySpecificListingPageModule)
   },
   {
-    path: 'my-properties/create-new-listing',
+    path: 'my-properties/create-new-listing/:id',
     loadChildren: () => import('./create-new-listing/create-new-listing.module').then( m => m.CreateNewListingPageModule)
   },
   {
-    path: 'listings/specific-listing',
+    path: 'listings/specific-listing/:id',
     loadChildren: () => import('./specific-listing/specific-listing.module').then( m => m.SpecificListingPageModule)
   },
 ];

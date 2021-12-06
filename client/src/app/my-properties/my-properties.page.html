@@ -11,7 +11,8 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
+  <h2 *ngIf="myProperties.length == 0">You have no listings. Add one if you would like.</h2>
+  <ion-list *ngIf="myProperties.length > 0">
     <ion-item *ngFor="let property of myProperties" (click)="openSpecificListing(property)">
       <div slot="start"></div>
       <ion-label class="ion-text-wrap">

@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { ListingService } from '../services/listing.service';
 import { Listing } from '../../models/listing.model';
 import * as DB from '../../models/db-types';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { Property } from 'src/models/property.model';
 import { PropertyService } from '../services/property.service';
 import { AlertController } from '@ionic/angular';
+import { User } from 'src/models/user.model';
 
 @Component({
   selector: 'app-listings',
@@ -16,6 +17,7 @@ export class ListingsPage {
   listings: DB.Listing[];
   allProperties: Property[];
   properties: Property[];
+  user: User;
   constructor(
     private listingService: ListingService,
     private propertyService: PropertyService,
@@ -23,6 +25,12 @@ export class ListingsPage {
     public router: Router,
     private alertCtrl: AlertController
   ) {
+    this.route.queryParams.subscribe(p => {
+      if (this.router.getCurrentNavigation().extras.state) {
+        console.log(this.router.getCurrentNavigation().extras.state);
+        this.user= this.router.getCurrentNavigation().extras.state.user;
+      }
+    });
   }
 
   filterItems() {
@@ -54,7 +62,8 @@ export class ListingsPage {
           handler: () => {
             console.log('Confirm Cancel');
           }
-        }, {
+        },
+        {
           text: 'Filter',
           handler: (data: any) => {
             this.properties = this.allProperties;
@@ -113,8 +122,8 @@ export class ListingsPage {
   }
 
   openSpecificListing(property: Property) {
-
-    this.router.navigate(['/listings/specific-listing/', property]);
+    let navigationExtras: NavigationExtras = { state: { user: this.user, property } };
+    this.router.navigate(['/listings/specific-listing/', property.id], navigationExtras);
   }
 
 }

@@ -40,6 +40,14 @@ export class UserService {
       );
   }
 
+  getUserByEmail(email): Observable<DB.User> {
+    return this.httpClient.get<DB.User>(this.endpoint + '/email/' + email)
+      .pipe(
+        tap(_ => console.log(`User fetched: ${email}`)),
+        catchError(this.handleError<DB.User>(`Get User id=${email}`))
+      );
+  }
+
   updateUser(id, user: DB.User): Observable<any> {
     return this.httpClient.put(this.endpoint + '/' + id, JSON.stringify(user), this.httpOptions)
       .pipe(

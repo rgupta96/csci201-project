@@ -1,33 +1,52 @@
 <ion-header>
     <ion-toolbar color="light">
-        <ion-buttons slot="start">
-        </ion-buttons>
         <ion-title>Login</ion-title>
     </ion-toolbar>
 </ion-header>
 
-{/* Where the rest of the content is I guess */}
-<ion-content className="form">
-{/* <ion-loading isOpen={showLoading} message="Logging in..." onDidDismiss={() => setShowLoading(false)}/> */}
-{/* <form onSubmit={handleSubmit} method="post" ref={formRef} action-=""> */}
+<ion-content>
+
+<ion-content>
+  <form [formGroup]="authData" (ngSubmit)="authenticateUser()">
+    <ion-item lines="full">
+      <ion-label>Email</ion-label>
+      <ion-input formControlName="email" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label>Password</ion-label>
+      <ion-input formControlName="password" type="text"></ion-input>
+    </ion-item>
+
+    <ion-row>
+      <ion-col>
+        <ion-button type="submit" color="primary" expand="block">Submit</ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
+  <ion-button color="secondary" expand="block" (click)="deleteListing()">Create Account Instead</ion-button>
+</ion-content>
+
+<!-- <ion-loading isOpen={showLoading} message="Logging in..." onDidDismiss=`{() => setShowLoading(false)}/> */}
+<form onSubmit={handleSubmit} method="post" ref={formRef} action-=""> */}
     <ion-list>
         <ion-item>
-            <ion-label position-={'fixed'}>Email</ion-label>
+            <ion-label position="fixed">Email</ion-label>
             <ion-input type="email" value={email} onInput={(e : any) => setEmail(e.currentTarget.value)} />
         </ion-item>
         <ion-item>
             <ion-label position-={'fixed'}>Password</ion-label>
             <ion-input
                 type="password"
-                value={password}
-                onInput={(e : any) => setPassword(e.currentTarget.value)}
-            />
-        </ion-item>
+                value={password} -->
+                <!-- onInput=`{(e : any) => setPassword(e.currentTarget.value)}` -->
+            <!-- /> -->
+        <!-- </ion-item>
     <ion-button expand="block" type="submit" onClick="submitLoginIn()">Log in</ion-button>
     </ion-list>
 {/* </form> */}
 {/* <div className="below-form">
     <a className="create" href="#/" onClick={(e) => { e.preventDefault(); goTo('/signup')}}>Create account instead</a>
     <a href="#/" onClick={(e) => { e.preventDefault(); goTo('/reset-password')}}>Forgot your password?</a>
-</div> */}
+</div> */} -->
 </ion-content>

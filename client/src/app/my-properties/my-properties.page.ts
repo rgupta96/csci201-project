@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { User } from '../../models/user.model';
 import { Property } from '../../models/property.model';
 import { UserService } from '../services/user.service';
@@ -7,11 +7,17 @@ import { ListingService } from '../services/listing.service';
 import * as DB from '../../models/db-types';
 import { PropertyService } from '../services/property.service';
 
+export interface UserWithProperty {
+  userId: number;
+  property: Property;
+}
+
 @Component({
   selector: 'app-my-properties',
   templateUrl: './my-properties.page.html',
   styleUrls: ['./my-properties.page.scss'],
 })
+
 export class MyPropertiesPage {
 
   user: User;
@@ -25,50 +31,54 @@ export class MyPropertiesPage {
     private listingService: ListingService,
     private propertyService: PropertyService
   ) {
-    this.userService.getUser(1).subscribe(u => {
-      console.log(u);
+    this.route.params.subscribe(p => {
+      console.log(p);
       this.user = new User(
-        u.firstName,
-        u.lastName,
-        u.userType,
-        u.loginType,
-        u.dateCreated,
-        u.email,
-        1
+        p.firstName,
+        p.lastName,
+        p.userType,
+        p.loginType,
+        p.dateCreated,
+        p.email,
+        p.id
       );
       console.log(this.user);
     });
-
-
-
   }
 
   openSpecificListing(property: Property) {
+    // const uwp: UserWithProperty = {
+    //   userId: this.user.id,
+    //   property
+    // }
+    let navigationExtras: NavigationExtras = { state: { user: this.user, property } };
 
-    this.router.navigate(['/my-properties/my-specific-listing/', property]);
+    this.router.navigate(['/my-properties/my-specific-listing/', property.id], navigationExtras);
   }
   openCreateListing() {
-    this.router.navigate(['/my-properties/create-new-listing']);
+    this.router.navigate(['/my-properties/create-new-listing', this.user.id]);
   }
   ionViewDidEnter() {
     this.myListings = [];
     this.myProperties = [];
     console.log('here');
     const parameters = {
-      user_id: 1
+      user_id: this.user.id
     };
     this.listingService.getListings(parameters).subscribe(listings => {
       this.myListings = listings;
-      this.myListings.sort((a,b) => (b.id - a.id));
-      console.log(this.myListings);
-      listings.forEach(listing => {
-        console.log(listing);
-        this.propertyService.getProperty(listing.propertyId).subscribe(p => {
-          this.myProperties.push(
-            new Property(p.headline,p.description,p.address, p.amenities, p.price, p.duration, p.id)
-          );
+      if(this.myListings != null) {
+        this.myListings.sort((a,b) => (b.id - a.id));
+        console.log(this.myListings);
+        listings.forEach(listing => {
+          console.log(listing);
+          this.propertyService.getProperty(listing.propertyId).subscribe(p => {
+            this.myProperties.push(
+              new Property(p.headline,p.description,p.address, p.amenities, p.price, p.duration, p.id)
+            );
+          });
         });
-      });
+      }
     });
 
   }
