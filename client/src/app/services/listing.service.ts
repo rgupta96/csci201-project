@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
@@ -24,21 +24,32 @@ export class ListingService {
         catchError(this.handleError<DB.Listing>('Error occured'))
       );
   }
-  getListing(id): Observable<DB.Property> {
-    return this.httpClient.get<DB.Property>(this.endpoint + '/' + id)
+  getListing(id): Observable<DB.Listing> {
+    return this.httpClient.get<DB.Listing>(this.endpoint + '/' + id)
       .pipe(
-        tap(_ => console.log(`Property fetched: ${id}`)),
-        catchError(this.handleError<DB.Property>(`Get property id=${id}`))
+        tap(_ => console.log(`Listing fetched: ${id}`)),
+        catchError(this.handleError<DB.Listing>(`Get property id=${id}`))
       );
   }
 
-  getListings(): Observable<DB.Listing[]> {
-    return this.httpClient.get<DB.Listing[]>(this.endpoint)
+  getListingsByPropertyId(property_id): Observable<DB.Listing> {
+    return this.httpClient.get<DB.Listing>(this.endpoint + '/property/' + property_id)
+      .pipe(
+        tap(_ => console.log(`Listings fetched: ${property_id}`)),
+        catchError(this.handleError<DB.Listing>(`Get property id=${property_id}`))
+      );
+  }
+
+  getListings(parameters?): Observable<DB.Listing[]> {
+    let params = new HttpParams();
+    params = params.append('user_id', parameters.user_id);
+    return this.httpClient.get<DB.Listing[]>(this.endpoint, { params : params })
       .pipe(
         tap(listings => console.log('Listings retrieved!')),
         catchError(this.handleError<DB.Listing[]>('Get listing', []))
       );
   }
+
 
   updateListing(id, listing: DB.Listing): Observable<any> {
     return this.httpClient.put(this.endpoint + '/' + id, JSON.stringify(listing), this.httpOptions)

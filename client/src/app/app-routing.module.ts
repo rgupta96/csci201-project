@@ -19,6 +19,14 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
+  {
+    path: 'my-properties',
+    loadChildren: () => import('./my-properties/my-properties.module').then( m => m.MyPropertiesPageModule)
+  },
+  {
+    path: 'my-properties/my-specific-listing',
+    loadChildren: () => import('./my-specific-listing/my-specific-listing.module').then( m => m.MySpecificListingPageModule)
+  },
 ];
 
 @NgModule({

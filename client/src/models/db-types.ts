@@ -5,6 +5,7 @@ export interface Property {
   id?: number;
   headline: string;
   description: string;
+  address: string;
   amenities: string;
   price: number;
   duration: number;
@@ -21,10 +22,9 @@ export interface User {
 
 export interface Listing {
   id?: number;
-  userID: number;
-  propertyID: number;
+  userId: number;
+  propertyId: number;
   dateListed: number;
   numberConsidering: number;
   dateCreated: number;
-  active: number;
 }
