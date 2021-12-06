@@ -1,0 +1,22 @@
+.listing-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.title-price {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    font-size: x-large;
+}
+
+.title-headline {
+    font-size: x-large;
+}

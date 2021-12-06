@@ -18,18 +18,25 @@
   <ion-list>
     <ion-item *ngFor="let property of properties" (click)="openSpecificListing(property)">
       <div slot="start"></div>
-      <ion-label class="ion-text-wrap">
-        <h2>
-          {{ property.headline }}
-        </h2>
-        <span class="date">
-          <ion-note>${{ property.price }}</ion-note>
-        </span>
+      <ion-label class="ion-text-wrap listing-wrapper">
+          <div class="title-price">
+                <h2 class="title-headline">
+                    {{ property.headline }}
+                </h2>
+                <!-- <span class="date"> -->
+                <ion-note class="title-headline">${{ property.price }}</ion-note>
+                <!-- </span> -->
+          </div>
+
 
         <h3>{{ property.description }}</h3>
-        <p>
-          {{ property.amenities }}
-        </p>
+        <div class="flex-row">
+            <ion-chip color="primary" *ngFor="let p of property.amenities.split(' ')">
+                <ion-label color="white" >{{p}}</ion-label>
+                
+            </ion-chip>
+        </div>
+        
       </ion-label>
       <ion-icon name="chevron-forward" size="small"></ion-icon>
     </ion-item>
