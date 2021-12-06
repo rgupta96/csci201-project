@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Listing #{{ property.id }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item lines="full">
+    <ion-label>Headline</ion-label>
+    {{ property.headline }}
+  </ion-item>
+  <ion-item lines="full">
+    <ion-label>Description</ion-label>
+    {{ property.description }}
+  </ion-item>
+  <ion-item lines="full">
+    <ion-label>Address</ion-label>
+    {{ property.address }}
+  </ion-item>
+  <ion-item lines="full">
+    <ion-label>Amenities</ion-label>
+    {{ property.amenities }}
+  </ion-item>
+  <ion-item lines="full">
+    <ion-label>Price</ion-label>
+    {{ property.price }}
+  </ion-item>
+  <ion-item lines="full">
+    <ion-label>Duration</ion-label>
+    {{ property.duration }}
+  </ion-item>
+  <ion-button color="primary" expand="block" (click)="contactLister()">Interested? Contact Lister</ion-button>
+</ion-content>

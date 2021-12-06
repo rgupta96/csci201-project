@@ -18,6 +18,7 @@ export interface User {
   userType: number;
   loginType: number;
   dateCreated: number;
+  email: string
 }
 
 export interface Listing {
@@ -26,5 +27,4 @@ export interface Listing {
   propertyId: number;
   dateListed: number;
   numberConsidering: number;
-  dateCreated: number;
 }

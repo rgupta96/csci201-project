@@ -56,7 +56,7 @@ export class MySpecificListingPage {
     );
     console.log(submission);
     this.propertyService.updateProperty(this.property.id, updatedProperty).subscribe(r => {
-      console.log(r);
+      this.router.navigate(['/my-properties']);
     });
   }
 

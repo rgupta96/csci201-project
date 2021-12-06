@@ -17,7 +17,7 @@ export class MyPropertiesPage {
   user: User;
   myListings: DB.Listing[];
   myProperties: Property[] = new Array<Property>();
-  listingsMap
+
   constructor(
     private route: ActivatedRoute,
     public router: Router,
@@ -33,6 +33,7 @@ export class MyPropertiesPage {
         u.userType,
         u.loginType,
         u.dateCreated,
+        u.email,
         1
       );
       console.log(this.user);
@@ -58,6 +59,7 @@ export class MyPropertiesPage {
     };
     this.listingService.getListings(parameters).subscribe(listings => {
       this.myListings = listings;
+      this.myListings.sort((a,b) => (b.id - a.id));
       console.log(this.myListings);
       listings.forEach(listing => {
         console.log(listing);
@@ -68,6 +70,6 @@ export class MyPropertiesPage {
         });
       });
     });
-    console.log(this.myProperties);
+
   }
 }

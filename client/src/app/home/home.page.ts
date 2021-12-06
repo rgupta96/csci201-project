@@ -27,8 +27,10 @@ export class HomePage {
       console.log(response);
       this.users = response;
     });
-
-    this.listingData.getListings().subscribe((response) => {
+    const parameters = {
+      user_id: 0
+    };
+    this.listingData.getListings(parameters).subscribe((response) => {
       console.log(response);
       this.listings = response;
     });
