@@ -5,14 +5,12 @@ import { FormsModule } from '@angular/forms';
 
 import { ListingsPage } from './listings.page';
 import { ListingsPageRoutingModule } from './listings-routing.module';
-import { ListingMessageComponentModule } from '../listingMessage/listingMessage.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ListingMessageComponentModule,
     ListingsPageRoutingModule
   ],
   declarations: [ListingsPage]
