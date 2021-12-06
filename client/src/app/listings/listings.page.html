@@ -3,6 +3,11 @@
     <ion-title>
       Listings
     </ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="filterItems()">
+        Filter
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -11,7 +16,7 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
   <ion-list>
-    <ion-item *ngFor="let property of allProperties" (click)="openSpecificListing(property)">
+    <ion-item *ngFor="let property of properties" (click)="openSpecificListing(property)">
       <div slot="start"></div>
       <ion-label class="ion-text-wrap">
         <h2>
