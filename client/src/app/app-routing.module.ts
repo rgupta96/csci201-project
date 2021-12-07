@@ -8,7 +8,9 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
+    redirectTo: '/home/login',
+    pathMatch: 'full'
+    //loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
   },
   {
     path: 'sign-up',
