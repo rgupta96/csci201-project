@@ -1,25 +1,25 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Listing #{{ property.id }}</ion-title>
+    <ion-title *ngIf="property">{{ property.headline }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="property">
     <ion-item>
         <div  class="wrapper">
             <div class="headline-price">
                 <ion-item lines="full" class="listing">
                     <!-- <ion-label>Headline</ion-label> -->
-                    {{ property.headline }} 
+                    {{ property.headline }}
                 </ion-item>
                 <div>
                     <ion-chip color="success">
                         <ion-label class="price" color="success">${{ property.price }}</ion-label>
                     </ion-chip>
                 </div>
-                
+
             </div>
-            
+
 
             <div class="address">
                 <ion-icon name="pin" color="primary"></ion-icon>
@@ -37,8 +37,8 @@
             <div class="description">
                 {{ property.description }}
             </div>
-            
-            
+
+
 
             <div class="amenities">
                 <ion-chip color="primary" *ngFor="let p of property.amenities.split(', ')">
@@ -47,8 +47,8 @@
             </div>
 
 
-            
-            
+
+
         </div>
     </ion-item>
 

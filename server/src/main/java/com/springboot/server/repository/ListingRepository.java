@@ -9,6 +9,5 @@ import com.springboot.server.model.Listing;
 
 public interface ListingRepository extends JpaRepository <Listing, Long>{
 	List<Listing> findByUserId(int user_id);
-	Listing findByPropertyId(int property_id);
-	List<Listing> findByActive(boolean active);
+	List<Listing> findByPropertyId(int property_id);
 }

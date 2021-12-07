@@ -8,7 +8,7 @@ public class Property {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	private long Id;
 	
 	@Column(name="headline")
 	private String headline;
@@ -28,6 +28,8 @@ public class Property {
 	@Column(name="duration")
 	private int duration;
 	
+	private String threadName;
+	
 	public Property() {
 		
 	}
@@ -42,7 +44,7 @@ public class Property {
 	}
 	
 	public long getId() {
-		return id;
+		return this.Id;
 	}
 
 	public String getHeadline() {
@@ -95,6 +97,14 @@ public class Property {
 	
 	@Override
 	public String toString() {
-		return "Property [id=" + id + ", headline=" + headline + ", desc=" + description + ", address=" + address + ", address=" + address + ", amenities=" + amenities + ", price=" + price + ", duration=" + duration + "]";
+		return "Property [id=" + Id + ", headline=" + headline + ", desc=" + description + ", address=" + address + ", address=" + address + ", amenities=" + amenities + ", price=" + price + ", duration=" + duration + "]";
+	}
+
+	public String getThreadName() {
+		return Thread.currentThread().getName();
+	}
+
+	public void setThreadName(String threadName) {
+		this.threadName = threadName;
 	}
 }

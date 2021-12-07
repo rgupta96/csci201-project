@@ -3,6 +3,7 @@ package com.springboot.server.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Vector;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,7 +32,7 @@ public class PropertyController {
 	@GetMapping("/properties")
 	public ResponseEntity<List<Property>> getAllProperties(@RequestParam(required = false) String headline) {
 	    try {
-	      List<Property> properties = new ArrayList<Property>();
+	      List<Property> properties = new Vector<Property>();
 
 	      if (headline == null)
 	        propertyRepo.findAll().forEach(properties::add);

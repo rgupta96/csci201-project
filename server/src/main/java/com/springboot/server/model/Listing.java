@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class Listing {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private long Id;
     @Column(name = "user_id")
     private int userId;
     @Column(name = "property_id")
@@ -16,17 +16,21 @@ public class Listing {
     private Date dateListed;
     @Column(name = "number_considering")
     private int numberConsidering;
-    @Column(name = "active")
-    private boolean active;
+    
+    private String threadName;
+    
     public Listing() {
     }
     public Listing(int user_id, int property_id, Date date_listed, 
-    			   int number_considering, boolean active) {
+    		int number_considering) {
         this.userId = user_id;
         this.propertyId = property_id;
         this.dateListed = date_listed;
         this.numberConsidering = number_considering;
-        this.active = active;
+    }
+    
+    public long getId() {
+    	return this.Id;
     }
     public int getUserId() {
         return this.userId;
@@ -43,20 +47,20 @@ public class Listing {
     public int getNumberConsidering() {
         return this.numberConsidering;
     }
-    public boolean getActiveStatus() {
-        return active;
-    }
-    public void setActiveStatus(boolean newStatus) {
-        this.active = newStatus;
-    }
     
     @Override
     public String toString() {
-        return "Listing [id=" + id + 
+        return "Listing [id=" + Id + 
         		", UserId=" + userId + 
         		", PropertyId=" + propertyId + 
         		", Date Listed=" + dateListed + 
-        		", Number Considering=" + numberConsidering + ", Active=" + active
+        		", Number Considering=" + numberConsidering 
         		+ "]";
     }
+	public String getThreadName() {
+		return Thread.currentThread().getName();
+	}
+	public void setThreadName(String threadName) {
+		this.threadName = threadName;
+	}
 }

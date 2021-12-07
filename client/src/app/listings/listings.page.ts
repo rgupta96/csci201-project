@@ -7,6 +7,7 @@ import { Property } from 'src/models/property.model';
 import { PropertyService } from '../services/property.service';
 import { AlertController } from '@ionic/angular';
 import { User } from 'src/models/user.model';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-listings',
@@ -16,15 +17,19 @@ import { User } from 'src/models/user.model';
 export class ListingsPage {
   listings: DB.Listing[];
   allProperties: Property[];
-  properties: Property[];
+  properties: Set<Property> = new Set();
   user: User;
+  propertyToListerMap: Map<Property, DB.User> = new Map(); // property_id to user
+
   constructor(
     private listingService: ListingService,
     private propertyService: PropertyService,
     private route: ActivatedRoute,
     public router: Router,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private userService: UserService
   ) {
+    console.log(this.route);
     this.route.queryParams.subscribe(p => {
       if (this.router.getCurrentNavigation().extras.state) {
         console.log(this.router.getCurrentNavigation().extras.state);
@@ -66,24 +71,20 @@ export class ListingsPage {
         {
           text: 'Filter',
           handler: (data: any) => {
-            this.properties = this.allProperties;
+            this.properties = new Set(); this.allProperties;
             const maxPrice = (data.price == '') ? Infinity : data.price;
             const minDuration = (data.minDuration == '') ? 0 : data.minDuration;
             const maxDuration = (data.maxDuration == '') ? Infinity : data.maxDuration;
             console.log(maxPrice, minDuration, maxDuration);
-            this.properties = this.properties.filter((a) => {
+            this.allProperties.forEach(p => {
               if(
-                a.price <= maxPrice &&
-                a.duration >= minDuration &&
-                a.duration <= maxDuration
+                p.price <= maxPrice &&
+                p.duration >= minDuration &&
+                p.duration <= maxDuration
               ) {
-                console.log(a);
-                return true;
-              } else {
-                return false
+                this.properties.add(p);
               }
             });
-            console.log(this.properties);
           }
         }
       ]
@@ -94,7 +95,7 @@ export class ListingsPage {
 
   ionViewDidEnter() {
     this.listings = [];
-    this.properties = [];
+    this.properties = new Set();
     this.allProperties = [];
     console.log('here');
     const parameters = {
@@ -102,13 +103,17 @@ export class ListingsPage {
     };
     this.listingService.getListings(parameters).subscribe(listings => {
       this.listings = listings;
-      this.listings.sort((a,b) => (b.id - a.id));
+      this.listings = this.listings.sort((a,b) => (b.id - a.id));
       listings.forEach(listing => {
         console.log(listing);
         this.propertyService.getProperty(listing.propertyId).subscribe(p => {
           const prop = new Property(p.headline,p.description,p.address, p.amenities, p.price, p.duration, p.id);
           this.allProperties.push(prop);
-          this.properties.push(prop);
+          this.properties.add(prop);
+          this.userService.getUser(listing.userId).subscribe(u => {
+            this.propertyToListerMap.set(prop, u);
+            console.log(this.propertyToListerMap);
+          });
         });
       });
     });
@@ -122,7 +127,11 @@ export class ListingsPage {
   }
 
   openSpecificListing(property: Property) {
-    let navigationExtras: NavigationExtras = { state: { user: this.user, property } };
+    let navigationExtras: NavigationExtras = {
+      state: {
+        user: this.user, property, lister: this.propertyToListerMap.get(property)
+      }
+    };
     this.router.navigate(['/listings/specific-listing/', property.id], navigationExtras);
   }
 

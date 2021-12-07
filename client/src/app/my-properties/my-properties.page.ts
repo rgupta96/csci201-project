@@ -41,10 +41,6 @@ export class MyPropertiesPage {
   }
 
   openSpecificListing(property: Property) {
-    // const uwp: UserWithProperty = {
-    //   userId: this.user.id,
-    //   property
-    // }
     let navigationExtras: NavigationExtras = { state: { user: this.user, property } };
 
     this.router.navigate(['/my-properties/my-specific-listing/', property.id], navigationExtras);

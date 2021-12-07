@@ -63,11 +63,31 @@ public class UserController {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
   }
+  
+  @GetMapping("/users/email/{email}")
+  public ResponseEntity<User> getUserByEmail(@PathVariable("email") String email) {
+    Optional<User> userData = userRepo.findByEmail(email);
+    if (userData.isPresent()) {
+      return new ResponseEntity<>(userData.get(), HttpStatus.OK);
+    } else {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+  }
+  
+  
   @PostMapping("/users")
   public ResponseEntity<User> createUser(@RequestBody User user) {
     try {
       User _user = userRepo
-          .save(new User(user.getFirstName(), user.getLastName(), user.getUserType(), user.getLoginType(), new Date()));
+          .save(new User(
+        		  user.getFirstName(),
+        		  user.getLastName(),
+        		  user.getUserType(),
+        		  user.getLoginType(),
+        		  new Date(),
+        		  user.getEmail(),
+        		  user.getPassword()
+        		  ));
       return new ResponseEntity<>(_user, HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

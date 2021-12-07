@@ -1,6 +1,7 @@
 package com.springboot.server.controller;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,14 +30,14 @@ public class ListingController {
 	ListingRepository listingRepo;
 	
 	@GetMapping("/listings")
-	public ResponseEntity<List<Listing>> getAllListings(@RequestParam(defaultValue="0", required = false) int user_id) {
+	public ResponseEntity<List<Listing>> getAllListings(
+			@RequestParam(defaultValue="0", required = false) int user_id) {
 	    try {
 	      List<Listing> listings = new ArrayList<Listing>();
 	      if (user_id <= 0)
 		        listingRepo.findAll().forEach(listings::add);
 		      else
 		        listingRepo.findByUserId(user_id).forEach(listings::add);
-
 	      if (listings.isEmpty()) {
 	        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	      }
@@ -58,6 +59,27 @@ public class ListingController {
 	    }
 	}
 	
+	@GetMapping("/listings/property/{id}")
+	public ResponseEntity<List<Listing>> getListingByPropertyId(
+			@PathVariable("id") int property_id
+		) {
+		try {
+		      List<Listing> listings = new LinkedList<Listing>();
+		      if (property_id <= 0)
+			        listingRepo.findAll().forEach(listings::add);
+			      else
+			        listingRepo.findByPropertyId(property_id).forEach(listings::add);
+		      if (listings.isEmpty()) {
+		        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		      }
+
+		      return new ResponseEntity<>(listings, HttpStatus.OK);
+		    } catch (Exception e) {
+		      return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		  }
+
+	}
+	
 	@PostMapping("/listings")
 	  public ResponseEntity<Listing> createListing(@RequestBody Listing Listing) {
 	    try {
@@ -66,8 +88,7 @@ public class ListingController {
 	        		  Listing.getUserId(),
 	        		  Listing.getPropertyId(),
 	        		  Listing.getDateListed(),
-	        		  Listing.getNumberConsidering(),
-	        		  Listing.getActiveStatus()
+	        		  Listing.getNumberConsidering()
 	        		 ));
 	      return new ResponseEntity<>(_Listing, HttpStatus.CREATED);
 	    } catch (Exception e) {
@@ -81,7 +102,6 @@ public class ListingController {
 
 	    if (ListingData.isPresent()) {
 	      Listing _Listing= ListingData.get();
-	      	_Listing.setActiveStatus(Listing.getActiveStatus());
 	      return new ResponseEntity<>(listingRepo.save(_Listing), HttpStatus.OK);
 	    } else {
 	      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -107,18 +127,4 @@ public class ListingController {
 	      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	    }
 	}
-	
-	@GetMapping("/listings/active")
-	  public ResponseEntity<List<Listing>> findByActive() {
-	    try {
-	      List<Listing> listings = listingRepo.findByActive(true);
-
-	      if (listings.isEmpty()) {
-	        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-	      }
-	      return new ResponseEntity<>(listings, HttpStatus.OK);
-	    } catch (Exception e) {
-	      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-	    }
-	  }
 }
