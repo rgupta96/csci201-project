@@ -16,8 +16,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'login',
-    pathMatch: 'full'
+    loadChildren: () => import('./tablinks/tablinks.module').then(m => m.TablinksPageModule)
   },
   {
     path: 'my-properties',
@@ -35,6 +34,10 @@ const routes: Routes = [
     path: 'listings/specific-listing/:id',
     loadChildren: () => import('./specific-listing/specific-listing.module').then( m => m.SpecificListingPageModule)
   },
+  {
+    path: 'about',
+    loadChildren: () => import('./about/about.module').then( m => m.AboutPageModule)
+  }
 ];
 
 @NgModule({
