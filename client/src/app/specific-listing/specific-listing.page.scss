@@ -1,0 +1,38 @@
+.listing {
+    font-size: xx-large;
+    font-weight: 600;
+}
+
+.description {
+    font-size: x-large;
+    margin: 15px 0px 15px 0px;
+}
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+.address {
+    display: flex;
+    flex-direction: row;
+    font-size: x-large;
+}
+
+.amenities {
+    display: flex;
+    flex-direction: row;
+}
+
+.headline-price {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+
+.price {
+    font-size: large
+}

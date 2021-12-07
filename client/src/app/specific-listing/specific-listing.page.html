@@ -5,30 +5,54 @@
 </ion-header>
 
 <ion-content>
-  <ion-item lines="full">
-    <ion-label>Headline</ion-label>
-    {{ property.headline }}
-  </ion-item>
-  <ion-item lines="full">
-    <ion-label>Description</ion-label>
-    {{ property.description }}
-  </ion-item>
-  <ion-item lines="full">
-    <ion-label>Address</ion-label>
-    {{ property.address }}
-  </ion-item>
-  <ion-item lines="full">
-    <ion-label>Amenities</ion-label>
-    {{ property.amenities }}
-  </ion-item>
-  <ion-item lines="full">
-    <ion-label>Price</ion-label>
-    {{ property.price }}
-  </ion-item>
-  <ion-item lines="full">
-    <ion-label>Duration</ion-label>
-    {{ property.duration }}
-  </ion-item>
+    <ion-item>
+        <div  class="wrapper">
+            <div class="headline-price">
+                <ion-item lines="full" class="listing">
+                    <!-- <ion-label>Headline</ion-label> -->
+                    {{ property.headline }} 
+                </ion-item>
+                <div>
+                    <ion-chip color="success">
+                        <ion-label class="price" color="success">${{ property.price }}</ion-label>
+                    </ion-chip>
+                </div>
+                
+            </div>
+            
+
+            <div class="address">
+                <ion-icon name="pin" color="primary"></ion-icon>
+                <ion-text color="medium">
+                    {{ property.address }}
+                </ion-text>
+            </div>
+            <div class="address">
+                <ion-icon name="alarm" color="primary"></ion-icon>
+                <ion-text color="medium">
+                    {{ property.duration }}
+                </ion-text>
+            </div>
+
+            <div class="description">
+                {{ property.description }}
+            </div>
+            
+            
+
+            <div class="amenities">
+                <ion-chip color="primary" *ngFor="let p of property.amenities.split(', ')">
+                    <ion-label color="white" >{{p}}</ion-label>
+                </ion-chip>
+            </div>
+
+
+            
+            
+        </div>
+    </ion-item>
+
+
   <ion-button *ngIf="user" color="primary" expand="block" (click)="contactLister()">Interested? Contact Lister</ion-button>
   <ion-button *ngIf="!user" color="primary" expand="block" [routerLink]="['/login']">Login to Contact Lister</ion-button>
 </ion-content>
