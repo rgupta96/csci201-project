@@ -23,17 +23,16 @@
                 <h2 class="title-headline">
                     {{ property.headline }}
                 </h2>
-                <!-- <span class="date"> -->
-                <ion-note class="title-headline">${{ property.price }}</ion-note>
-                <!-- </span> -->
+                <ion-chip color="success">
+                    <ion-label class="price" color="success">${{ property.price }}</ion-label>
+                </ion-chip>
           </div>
 
 
-        <h3>{{ property.description }}</h3>
+        <ion-text color="medium">{{ property.description }}</ion-text>
         <div class="flex-row">
-            <ion-chip color="primary" *ngFor="let p of property.amenities.split(' ')">
+            <ion-chip color="primary" *ngFor="let p of property.amenities.split(', ')">
                 <ion-label color="white" >{{p}}</ion-label>
-                
             </ion-chip>
         </div>
         
