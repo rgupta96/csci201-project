@@ -11,10 +11,15 @@
 </ion-header>
 
 <ion-content>
-  <h2 *ngIf="myProperties.length == 0">You have no listings. Add one if you would like.</h2>
+    <div class="no-properties" *ngIf="myProperties.length == 0">
+        <ion-icon name="sad-outline" class="frowny" color="medium"></ion-icon>
+        <ion-text class="no-listings-text" color="medium">
+            You have no listings. Add one if you would like.
+        </ion-text>
+    </div>
   <ion-list *ngIf="myProperties.length > 0">
     <ion-item *ngFor="let property of myProperties" (click)="openSpecificListing(property)">
-      <div slot="start"></div>
+      <!-- <div slot="start"></div>
       <ion-label class="ion-text-wrap">
         <h2>
           {{ property.headline }}
@@ -27,6 +32,27 @@
         <p>
           {{ property.amenities }}
         </p>
+      </ion-label>
+      <ion-icon name="chevron-forward" size="small"></ion-icon> -->
+      <div slot="start"></div>
+      <ion-label class="ion-text-wrap listing-wrapper">
+          <div class="title-price">
+                <h2 class="title-headline">
+                    {{ property.headline }}
+                </h2>
+                <ion-chip color="success">
+                    <ion-label class="price" color="success">${{ property.price }}</ion-label>
+                </ion-chip>
+          </div>
+
+
+        <ion-text color="medium">{{ property.description }}</ion-text>
+        <div class="flex-row">
+            <ion-chip color="primary" *ngFor="let p of property.amenities.split(', ')">
+                <ion-label color="white" >{{p}}</ion-label>
+            </ion-chip>
+        </div>
+        
       </ion-label>
       <ion-icon name="chevron-forward" size="small"></ion-icon>
     </ion-item>
