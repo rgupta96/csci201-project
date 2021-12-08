@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.springboot.server.model.User;
 import com.springboot.server.repository.UserRepository;
+import com.springboot.server.CreateUser;
 
 
 
@@ -75,24 +76,20 @@ public class UserController {
   }
   
   
-  @PostMapping("/users")
-  public ResponseEntity<User> createUser(@RequestBody User user) {
-    try {
-      User _user = userRepo
-          .save(new User(
-        		  user.getFirstName(),
-        		  user.getLastName(),
-        		  user.getUserType(),
-        		  user.getLoginType(),
-        		  new Date(),
-        		  user.getEmail(),
-        		  user.getPassword()
-        		  ));
-      return new ResponseEntity<>(_user, HttpStatus.CREATED);
-    } catch (Exception e) {
-      return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-  }
+  // @PostMapping("/users")
+  // public ResponseEntity<User> createUser(@RequestBody User user) {
+  //   try {
+  //     CreateUser c = new CreateUser(user);
+  //     c.start();
+  //     c.join();
+  //     User userInput = c.getUser();
+  //     User _user = userRepo
+  //         .save(userInput);
+  //     return new ResponseEntity<>(_user, HttpStatus.CREATED);
+  //   } catch (Exception e) {
+  //     return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+  //   }
+  // }
   @PutMapping("/users/{id}")
   public ResponseEntity<User> updateUser(@PathVariable("id") long id, @RequestBody User user) {
     Optional<User> userData = userRepo.findById(id);
