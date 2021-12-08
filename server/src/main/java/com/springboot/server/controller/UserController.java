@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.springboot.server.CreateUser;
 import com.springboot.server.model.User;
 import com.springboot.server.repository.UserRepository;
 
@@ -77,22 +78,39 @@ public class UserController {
   
   @PostMapping("/users")
   public ResponseEntity<User> createUser(@RequestBody User user) {
+	  
+	  CreateUser cu = new CreateUser(
+  			new User(
+  					  user.getFirstName(),
+  		      		  user.getLastName(),
+  		      		  user.getUserType(),
+  		      		  user.getLoginType(),
+  		      		  new Date(),
+  		      		  user.getEmail(),
+  		      		  user.getPassword()
+  			)
+  		);
+	  cu.run();
     try {
+    	
+    	
       User _user = userRepo
           .save(new User(
-        		  user.getFirstName(),
-        		  user.getLastName(),
-        		  user.getUserType(),
-        		  user.getLoginType(),
+        		  cu.getUser().getFirstName(),
+        		  cu.getUser().getLastName(),
+        		  cu.getUser().getUserType(),
+        		  cu.getUser().getLoginType(),
         		  new Date(),
-        		  user.getEmail(),
-        		  user.getPassword()
+        		  cu.getUser().getEmail(),
+        		  cu.getUser().getPassword()
         		  ));
       return new ResponseEntity<>(_user, HttpStatus.CREATED);
     } catch (Exception e) {
+    	logger.error("crap",e);
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
+  
   @PutMapping("/users/{id}")
   public ResponseEntity<User> updateUser(@PathVariable("id") long id, @RequestBody User user) {
     Optional<User> userData = userRepo.findById(id);
